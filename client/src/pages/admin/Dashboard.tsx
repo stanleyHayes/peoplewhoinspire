@@ -59,6 +59,7 @@ const toneStyles: Record<
     soft: string;
     border: string;
     bar: string;
+    track: string;
     gradient: string;
     ring: string;
   }
@@ -69,6 +70,7 @@ const toneStyles: Record<
     soft: 'bg-navy-50 text-navy-900',
     border: 'border-navy-200',
     bar: 'bg-navy-900',
+    track: 'bg-navy-950/10',
     gradient: 'from-navy-950 to-navy-700',
     ring: 'ring-navy-950/10',
   },
@@ -78,6 +80,7 @@ const toneStyles: Record<
     soft: 'bg-gold-50 text-gold-700',
     border: 'border-gold-200',
     bar: 'bg-gold-400',
+    track: 'bg-gold-400/15',
     gradient: 'from-gold-400 to-amber-500',
     ring: 'ring-gold-400/30',
   },
@@ -87,6 +90,7 @@ const toneStyles: Record<
     soft: 'bg-blue-50 text-blue-700',
     border: 'border-blue-200',
     bar: 'bg-blue-600',
+    track: 'bg-blue-600/10',
     gradient: 'from-blue-500 to-indigo-600',
     ring: 'ring-blue-500/20',
   },
@@ -96,6 +100,7 @@ const toneStyles: Record<
     soft: 'bg-emerald-50 text-emerald-700',
     border: 'border-emerald-200',
     bar: 'bg-emerald-600',
+    track: 'bg-emerald-600/10',
     gradient: 'from-emerald-500 to-teal-600',
     ring: 'ring-emerald-500/20',
   },
@@ -105,6 +110,7 @@ const toneStyles: Record<
     soft: 'bg-amber-50 text-amber-700',
     border: 'border-amber-200',
     bar: 'bg-amber-500',
+    track: 'bg-amber-500/15',
     gradient: 'from-amber-500 to-orange-600',
     ring: 'ring-amber-500/20',
   },
@@ -114,6 +120,7 @@ const toneStyles: Record<
     soft: 'bg-rose-50 text-rose-700',
     border: 'border-rose-200',
     bar: 'bg-rose-600',
+    track: 'bg-rose-600/10',
     gradient: 'from-rose-500 to-red-600',
     ring: 'ring-rose-500/20',
   },
@@ -123,6 +130,7 @@ const toneStyles: Record<
     soft: 'bg-violet-50 text-violet-700',
     border: 'border-violet-200',
     bar: 'bg-violet-600',
+    track: 'bg-violet-600/10',
     gradient: 'from-violet-500 to-purple-600',
     ring: 'ring-violet-500/20',
   },
@@ -132,6 +140,7 @@ const toneStyles: Record<
     soft: 'bg-cyan-50 text-cyan-700',
     border: 'border-cyan-200',
     bar: 'bg-cyan-600',
+    track: 'bg-cyan-600/10',
     gradient: 'from-cyan-500 to-sky-600',
     ring: 'ring-cyan-500/20',
   },
@@ -391,7 +400,7 @@ function HorizontalBar({
         </div>
         <span className="font-serif text-xl font-bold text-navy-900">{formatNumber(value)}</span>
       </div>
-      <div className="h-3 overflow-hidden rounded-full bg-gray-100">
+      <div className={`h-2 overflow-hidden rounded-full ${toneStyles[tone].track}`}>
         <motion.div
           initial={{ width: 0 }}
           animate={{ width: `${barSize(value, total)}%` }}
@@ -847,47 +856,49 @@ export default function DashboardPage() {
             </div>
           </div>
 
-          <div className="border-t border-white/10 bg-white/[0.04] p-5 sm:p-7 lg:border-l lg:border-t-0">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-gray-400">
-                  Readiness
-                </p>
-                <p className="mt-1 text-sm text-gray-300">Publishing, visuals, and replies</p>
-              </div>
-              <div
-                className="grid h-24 w-24 shrink-0 place-items-center rounded-full"
-                style={{
-                  background: `conic-gradient(#d4a843 ${readinessScore}%, rgba(255,255,255,0.12) 0)`,
-                }}
-              >
-                <div className="grid h-16 w-16 place-items-center rounded-full bg-navy-950">
-                  <span className="font-serif text-2xl font-bold text-white">{readinessScore}%</span>
+          <div className="border-t border-white/10 p-4 sm:p-5 lg:border-l lg:border-t-0">
+            <div className="rounded-xl border border-navy-950/10 bg-white p-5 shadow-[0_12px_32px_rgba(26,26,46,0.14)]">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-navy-400">
+                    Readiness
+                  </p>
+                  <p className="mt-1 text-sm text-gray-500">Publishing, visuals, and replies</p>
+                </div>
+                <div
+                  className="grid h-24 w-24 shrink-0 place-items-center rounded-full"
+                  style={{
+                    background: `conic-gradient(#d4a843 ${readinessScore}%, rgba(26,26,46,0.08) 0)`,
+                  }}
+                >
+                  <div className="grid h-16 w-16 place-items-center rounded-full bg-white ring-1 ring-navy-950/5">
+                    <span className="font-serif text-2xl font-bold text-navy-950">{readinessScore}%</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="mt-6 space-y-4">
-              <HorizontalBar
-                label="Public readiness"
-                value={publishReadyCount}
-                total={Math.max(publishReadyTotal, 1)}
-                tone="gold"
-                detail={`${publishReadyTotal} public-facing records checked`}
-              />
-              <HorizontalBar
-                label="Visual coverage"
-                value={assetReady}
-                total={Math.max(assetPossible, 1)}
-                tone="cyan"
-                detail={`${assetGap} media gaps remaining`}
-              />
-              <HorizontalBar
-                label="Response coverage"
-                value={content.contacts.replied}
-                total={Math.max(content.contacts.total, 1)}
-                tone="emerald"
-                detail={`${content.contacts.pending} message threads pending`}
-              />
+              <div className="mt-6 space-y-4">
+                <HorizontalBar
+                  label="Public readiness"
+                  value={publishReadyCount}
+                  total={Math.max(publishReadyTotal, 1)}
+                  tone="gold"
+                  detail={`${publishReadyTotal} public-facing records checked`}
+                />
+                <HorizontalBar
+                  label="Visual coverage"
+                  value={assetReady}
+                  total={Math.max(assetPossible, 1)}
+                  tone="cyan"
+                  detail={`${assetGap} media gaps remaining`}
+                />
+                <HorizontalBar
+                  label="Response coverage"
+                  value={content.contacts.replied}
+                  total={Math.max(content.contacts.total, 1)}
+                  tone="emerald"
+                  detail={`${content.contacts.pending} message threads pending`}
+                />
+              </div>
             </div>
           </div>
         </div>

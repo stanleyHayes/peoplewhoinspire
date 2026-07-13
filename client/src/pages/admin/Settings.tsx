@@ -4,7 +4,6 @@ import {
   FaUser,
   FaCog,
   FaSearch,
-  FaShareAlt,
   FaPalette,
   FaSave,
   FaLock,
@@ -22,7 +21,7 @@ import type { Setting } from '../../types';
 import ImageUploadField from '../../components/admin/ImageUploadField';
 import { Skeleton, SkeletonText } from '../../components/ui/Skeleton';
 
-type TabId = 'profile' | 'password' | 'general' | 'seo' | 'social' | 'appearance' | 'preferences';
+type TabId = 'profile' | 'password' | 'general' | 'seo' | 'appearance' | 'preferences';
 
 const AVATAR_ACCEPTED_TYPES = 'image/jpeg,image/png,image/webp,image/gif';
 
@@ -45,7 +44,6 @@ const tabs: TabConfig[] = [
   { id: 'password', label: 'Password', description: 'Security credentials', icon: FaLock },
   { id: 'general', label: 'General', description: 'Public site basics', icon: FaCog },
   { id: 'seo', label: 'SEO', description: 'Search and sharing defaults', icon: FaSearch },
-  { id: 'social', label: 'Social Media', description: 'Official public channels', icon: FaShareAlt },
   { id: 'appearance', label: 'Appearance', description: 'Brand colors and visual assets', icon: FaPalette },
   { id: 'preferences', label: 'Preferences', description: 'Admin workflow defaults', icon: FaBell },
 ];
@@ -62,13 +60,6 @@ const settingFields: Record<string, SettingField[]> = {
     { key: 'meta_title', label: 'Meta Title', description: 'Default page title for search engine results (50-60 characters recommended)' },
     { key: 'meta_description', label: 'Meta Description', description: 'Default meta description for search engines (150-160 characters recommended)' },
     { key: 'og_image_url', label: 'Open Graph Image', description: 'Default sharing image for social cards (1200x630px recommended)', type: 'image' },
-  ],
-  social: [
-    { key: 'twitter_url', label: 'Twitter / X', description: 'Your Twitter or X profile URL', type: 'url' },
-    { key: 'instagram_url', label: 'Instagram', description: 'Your Instagram profile URL', type: 'url' },
-    { key: 'linkedin_url', label: 'LinkedIn', description: 'Your LinkedIn page URL', type: 'url' },
-    { key: 'youtube_url', label: 'YouTube', description: 'Your YouTube channel URL', type: 'url' },
-    { key: 'facebook_url', label: 'Facebook', description: 'Your Facebook page URL', type: 'url' },
   ],
   appearance: [
     { key: 'primary_color', label: 'Primary Color', description: 'Main brand color used across the site', type: 'color' },
@@ -398,7 +389,7 @@ export default function Settings() {
   const activeTabConfig = tabs.find((tab) => tab.id === activeTab) || tabs[0];
   const ActiveTabIcon = activeTabConfig.icon;
   const imageSettingsConfigured = ['og_image_url', 'logo_url', 'favicon_url'].filter((key) => settings[key]).length;
-  const socialLinksConfigured = ['twitter_url', 'instagram_url', 'linkedin_url', 'youtube_url', 'facebook_url'].filter(
+  const seoFieldsConfigured = ['meta_title', 'meta_description', 'og_image_url'].filter(
     (key) => settings[key]
   ).length;
   const renderImageSettingField = (field: SettingField) => {
@@ -883,7 +874,7 @@ export default function Settings() {
               {[
                 { label: 'Sections', value: tabs.length, icon: FaCog },
                 { label: 'Image Assets', value: `${imageSettingsConfigured}/3`, icon: FaImage },
-                { label: 'Social Links', value: `${socialLinksConfigured}/5`, icon: FaShareAlt },
+                { label: 'SEO Fields', value: `${seoFieldsConfigured}/3`, icon: FaSearch },
                 { label: 'Unsaved', value: changedCount, icon: FaSave },
               ].map((item) => {
                 const StatIcon = item.icon;

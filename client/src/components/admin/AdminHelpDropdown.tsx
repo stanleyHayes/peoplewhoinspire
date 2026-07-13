@@ -240,33 +240,43 @@ export default function AdminHelpDropdown({
       <button
         type="button"
         onClick={() => setOpen((current) => !current)}
-        className="inline-flex items-center gap-3 rounded-full border border-navy-950/10 bg-navy-950 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-navy-800"
+        className={`inline-flex items-center gap-2.5 rounded-full border bg-white px-4 py-2.5 text-sm font-semibold text-navy-900 transition-all hover:border-gold-300 hover:bg-gold-50/60 ${
+          open ? 'border-gold-400 ring-2 ring-gold-400/20' : 'border-navy-950/10'
+        }`}
         aria-expanded={open}
         aria-haspopup="menu"
       >
-        <FaQuestionCircle className="text-gold-300" aria-hidden="true" />
+        <FaQuestionCircle className="text-gold-500" aria-hidden="true" />
         Help & actions
         <FaChevronDown
-          className={`text-xs transition-transform ${open ? 'rotate-180' : 'rotate-0'}`}
+          className={`text-xs text-gray-400 transition-transform ${open ? 'rotate-180' : 'rotate-0'}`}
           aria-hidden="true"
         />
       </button>
 
       {open && (
         <div
-          className="absolute right-0 top-full z-50 mt-3 w-[min(92vw,440px)] overflow-hidden rounded-2xl border border-navy-950/10 bg-white shadow-2xl shadow-navy-950/20"
+          className="absolute right-0 top-full z-50 mt-2.5 w-[min(92vw,440px)] overflow-hidden rounded-xl border border-navy-950/10 bg-white shadow-[0_12px_32px_rgba(26,26,46,0.14)]"
           role="menu"
         >
-          <div className="bg-navy-950 p-5 text-white">
+          {/* Header — flat light wash (IAA-style), not a dark block */}
+          <div className="border-b border-navy-950/10 bg-gradient-to-br from-gold-50 via-white to-white p-5">
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-300">
-                  Admin guide
-                </p>
-                <h2 className="mt-2 font-serif text-2xl font-bold">How to use this platform</h2>
-                <p className="mt-2 text-sm leading-6 text-gray-300">
-                  Quick help for the full admin system and the page you are currently viewing.
-                </p>
+              <div className="flex items-start gap-3">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold-400/15 text-gold-600 ring-1 ring-gold-400/20">
+                  <FaQuestionCircle aria-hidden="true" />
+                </span>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-600">
+                    Admin guide
+                  </p>
+                  <h2 className="mt-1 font-serif text-xl font-bold text-navy-950">
+                    How to use this platform
+                  </h2>
+                  <p className="mt-1.5 text-sm leading-6 text-gray-500">
+                    Quick help for the full admin system and the page you are currently viewing.
+                  </p>
+                </div>
               </div>
               <button
                 type="button"
@@ -279,8 +289,8 @@ export default function AdminHelpDropdown({
             </div>
           </div>
 
-          <div className="max-h-[70vh] overflow-y-auto p-5">
-            <section>
+          <div className="max-h-[70vh] overflow-y-auto">
+            <section className="p-5">
               <div className="mb-3 flex items-center gap-2">
                 <FaBookOpen className="text-gold-500" aria-hidden="true" />
                 <h3 className="text-sm font-bold uppercase tracking-wide text-navy-900">
@@ -289,7 +299,10 @@ export default function AdminHelpDropdown({
               </div>
               <div className="grid gap-2">
                 {usageGuide.map((item, index) => (
-                  <div key={item} className="flex gap-3 border border-navy-950/10 bg-[#fbfaf6] p-3">
+                  <div
+                    key={item}
+                    className="flex gap-3 rounded-lg border border-navy-950/10 bg-[#fbfaf6] p-3"
+                  >
                     <span className="font-serif text-lg font-bold text-gold-500">0{index + 1}</span>
                     <p className="text-sm leading-6 text-gray-600">{item}</p>
                   </div>
@@ -297,7 +310,7 @@ export default function AdminHelpDropdown({
               </div>
             </section>
 
-            <section className="mt-5 border-t border-navy-950/10 pt-5">
+            <section className="border-t border-navy-950/10 p-5">
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-gold-600">
                 Current page
               </p>
@@ -315,11 +328,11 @@ export default function AdminHelpDropdown({
               </ul>
             </section>
 
-            <section className="mt-5 grid gap-2 border-t border-navy-950/10 pt-5 sm:grid-cols-2">
+            <section className="grid gap-2 border-t border-navy-950/10 p-3 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={replayTour}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-950/10 bg-white px-4 py-3 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-300 hover:bg-gold-50"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-200 hover:bg-gold-50/60"
               >
                 <FaRedo className="text-gold-500" aria-hidden="true" />
                 Show me around
@@ -327,7 +340,7 @@ export default function AdminHelpDropdown({
               <button
                 type="button"
                 onClick={speaking ? stopSpeech : speakGuide}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-950/10 bg-white px-4 py-3 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-300 hover:bg-gold-50"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-200 hover:bg-gold-50/60"
               >
                 {speaking ? <FaStop className="text-gold-500" /> : <FaPlay className="text-gold-500" />}
                 {speaking ? 'Stop audio' : 'Read aloud'}
@@ -335,7 +348,7 @@ export default function AdminHelpDropdown({
               <button
                 type="button"
                 onClick={onToggleDarkMode}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-950/10 bg-white px-4 py-3 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-300 hover:bg-gold-50"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-200 hover:bg-gold-50/60"
               >
                 {darkMode ? <FaSun className="text-gold-500" /> : <FaMoon className="text-gold-500" />}
                 {darkMode ? 'Light mode' : 'Dark mode'}
@@ -343,7 +356,7 @@ export default function AdminHelpDropdown({
               <Link
                 to="/admin/settings"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-950/10 bg-white px-4 py-3 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-300 hover:bg-gold-50"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-200 hover:bg-gold-50/60"
               >
                 <FaCog className="text-gold-500" aria-hidden="true" />
                 Settings
@@ -351,7 +364,7 @@ export default function AdminHelpDropdown({
               <Link
                 to="/"
                 onClick={() => setOpen(false)}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-navy-950/10 bg-white px-4 py-3 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-300 hover:bg-gold-50"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-200 hover:bg-gold-50/60"
               >
                 <FaExternalLinkAlt className="text-gold-500" aria-hidden="true" />
                 Visit site
@@ -359,7 +372,7 @@ export default function AdminHelpDropdown({
               <button
                 type="button"
                 onClick={onLogout}
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600 transition-colors hover:bg-red-100"
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-bold text-red-600 transition-colors hover:bg-red-50"
               >
                 <FaSignOutAlt aria-hidden="true" />
                 Logout
