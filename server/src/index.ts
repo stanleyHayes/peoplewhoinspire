@@ -39,15 +39,26 @@ const allowedOrigins = [
   "http://localhost:5172",
   "http://localhost:5173",
   "http://localhost:5174",
+  "http://localhost:5190",
+  "http://127.0.0.1:5190",
   // Comma-separated extra origins for previews/staging, e.g. "https://pwi-preview.vercel.app"
   ...(process.env.CORS_ORIGINS
     ? process.env.CORS_ORIGINS.split(',').map((origin) => origin.trim()).filter(Boolean)
     : []),
 ];
 
+// In development, allow any localhost/127.0.0.1 origin regardless of port so
+// Vite port changes never break the local dev loop. Production stays strict.
+const isDev = process.env.NODE_ENV !== 'production';
+const devOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
+
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (
+      !origin ||
+      allowedOrigins.includes(origin) ||
+      (isDev && devOriginPattern.test(origin))
+    ) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
