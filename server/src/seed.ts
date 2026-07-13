@@ -9,6 +9,7 @@ import Partner from './models/Partner';
 import Testimonial from './models/Testimonial';
 import Setting from './models/Setting';
 import Contact from './models/Contact';
+import Subscriber from './models/Subscriber';
 
 dotenv.config();
 
@@ -328,7 +329,6 @@ const seedDatabase = async () => {
     console.log('Created sample contacts');
 
     // Sample subscribers
-    const Subscriber = (await import('./models/Subscriber')).default;
     await Subscriber.deleteMany({});
     await Subscriber.insertMany([
       { email: 'kwame@example.com', name: 'Kwame Asante', subscribed: true },
