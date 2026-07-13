@@ -9,3 +9,4 @@ server/uploads/*
 font.zip
 *.docx
 .claude/
+credentials.txt
