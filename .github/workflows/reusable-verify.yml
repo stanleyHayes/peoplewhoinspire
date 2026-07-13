@@ -1,0 +1,73 @@
+name: Reusable — Node verify
+
+# Reusable quality gate for a Node workspace in this repo.
+# Runs: install → (optional lint) → typecheck → test (optional coverage) → build.
+# Call it from ci.yml with `uses: ./.github/workflows/reusable-verify.yml`.
+
+on:
+  workflow_call:
+    inputs:
+      job-name:
+        description: Display name for the calling job
+        type: string
+        default: Verify
+      working-directory:
+        description: Package directory (client or server)
+        type: string
+        required: true
+      node-version:
+        description: Node.js version to run on
+        type: string
+        default: '22'
+      lint:
+        description: Run `npm run lint`
+        type: boolean
+        default: false
+      coverage:
+        description: Run tests with coverage instead of plain `npm test`
+        type: boolean
+        default: false
+      vite-api-url:
+        description: VITE_API_URL build-time value (client only)
+        type: string
+        default: ''
+
+jobs:
+  verify:
+    name: ${{ inputs.job-name }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: npm
+          cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        if: ${{ inputs.lint }}
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        if: ${{ !inputs.coverage }}
+        run: npm test
+
+      - name: Test with coverage
+        if: ${{ inputs.coverage }}
+        run: npm run test:coverage
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_API_URL: ${{ inputs.vite-api-url }}

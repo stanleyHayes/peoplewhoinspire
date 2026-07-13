@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#1a1a2e" />
+    <title>People Who Inspire | Global Leadership & Impact Platform</title>
+    <meta
+      name="description"
+      content="People Who Inspire (PWI) is a global leadership and impact platform connecting, equipping, and empowering purpose-driven leaders. Watch PWI Conversations live every Saturday at 7PM GMT."
+    />
+    <link rel="canonical" href="https://www.peoplewhoinspire.global/" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="People Who Inspire" />
+    <meta property="og:title" content="People Who Inspire | Global Leadership & Impact Platform" />
+    <meta
+      property="og:description"
+      content="A global leadership and impact platform empowering purpose-driven leaders. PWI Conversations stream live every Saturday at 7PM GMT."
+    />
+    <meta property="og:url" content="https://www.peoplewhoinspire.global/" />
+    <meta property="og:image" content="https://www.peoplewhoinspire.global/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="People Who Inspire | Global Leadership & Impact Platform" />
+    <meta
+      name="twitter:description"
+      content="A global leadership and impact platform empowering purpose-driven leaders. PWI Conversations stream live every Saturday at 7PM GMT."
+    />
+    <meta name="twitter:image" content="https://www.peoplewhoinspire.global/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fraunces (titles) + Outfit (body) — display=swap keeps text visible during load -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Outfit:wght@300..900&display=swap">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Outfit:wght@300..900&display=swap" rel="stylesheet">
+    <!-- Axiforma (admin UI) — self-hosted, preloaded for the authenticated app -->
+    <link rel="preload" href="/fonts/Axiforma-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/Axiforma-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Boot splash screen — shown before React mounts, dismissed in main.tsx -->
+    <style>
+      #pwi-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.75rem;
+        background:
+          radial-gradient(circle at 50% 0%, rgba(212,168,67,0.16), transparent 38%),
+          linear-gradient(160deg, #1a1a2e 0%, #101022 55%, #08080d 100%);
+        color: #fff;
+        font-family: 'Outfit', system-ui, sans-serif;
+        transition: opacity 0.55s ease, visibility 0.55s ease;
+      }
+      #pwi-splash.pwi-splash-hidden {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #pwi-splash .splash-ring {
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        border: 1px solid rgba(212,168,67,0.16);
+        box-shadow:
+          0 0 0 48px rgba(212,168,67,0.05),
+          0 0 0 120px rgba(212,168,67,0.035),
+          0 0 0 220px rgba(212,168,67,0.02);
+        animation: splash-breathe 3.4s ease-in-out infinite;
+      }
+      #pwi-splash .splash-mono {
+        position: relative;
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        background: #d4a843;
+        color: #08080d;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 800;
+        font-size: 2rem;
+        box-shadow: 0 18px 44px -16px rgba(212,168,67,0.7);
+        animation: splash-rise 0.7s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      #pwi-splash .splash-name {
+        position: relative;
+        text-align: center;
+        animation: splash-rise 0.7s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      #pwi-splash .splash-name strong {
+        display: block;
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+      #pwi-splash .splash-name span {
+        display: block;
+        margin-top: 0.35rem;
+        font-size: 0.65rem;
+        font-weight: 700;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: #d4a843;
+      }
+      #pwi-splash .splash-bar {
+        position: relative;
+        width: 168px;
+        height: 3px;
+        border-radius: 999px;
+        background: rgba(255,255,255,0.12);
+        overflow: hidden;
+        animation: splash-rise 0.7s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      #pwi-splash .splash-bar::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        width: 45%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #d4a843, #dcc072);
+        animation: splash-slide 1.15s ease-in-out infinite;
+      }
+      @keyframes splash-rise {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes splash-slide {
+        0% { transform: translateX(-120%); }
+        100% { transform: translateX(320%); }
+      }
+      @keyframes splash-breathe {
+        0%, 100% { transform: scale(1); opacity: 0.85; }
+        50% { transform: scale(1.05); opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #pwi-splash .splash-ring,
+        #pwi-splash .splash-bar::after { animation: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="pwi-splash" role="status" aria-label="Loading People Who Inspire">
+      <div class="splash-ring" aria-hidden="true"></div>
+      <div class="splash-mono">PW</div>
+      <div class="splash-name">
+        <strong>People Who Inspire</strong>
+        <span>Est. 2025</span>
+      </div>
+      <div class="splash-bar" aria-hidden="true"></div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,807 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-50: #e8e8f0;
+  --color-navy-100: #c5c5d9;
+  --color-navy-200: #9e9ebf;
+  --color-navy-300: #7676a5;
+  --color-navy-400: #585891;
+  --color-navy-500: #3a3a7d;
+  --color-navy-600: #2d2d5e;
+  --color-navy-700: #232346;
+  --color-navy-800: #1a1a2e;
+  --color-navy-900: #0f0f1a;
+  --color-navy-950: #08080d;
+
+  --color-gold-50: #faf6eb;
+  --color-gold-100: #f3ead0;
+  --color-gold-200: #e8d5a1;
+  --color-gold-300: #dcc072;
+  --color-gold-400: #d4a843;
+  --color-gold-500: #c49a35;
+  --color-gold-600: #a37e2b;
+  --color-gold-700: #7d6121;
+  --color-gold-800: #574318;
+  --color-gold-900: #30250d;
+  --color-gold-950: #181207;
+
+  --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Fraunces', ui-serif, Georgia, serif;
+  --font-admin: 'Axiforma', 'Outfit', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Axiforma — self-hosted brand font used for the admin product UI */
+@font-face {
+  font-family: 'Axiforma';
+  src:
+    url('/fonts/Axiforma-Regular.woff2') format('woff2'),
+    url('/fonts/Axiforma-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src:
+    url('/fonts/Axiforma-Italic.woff2') format('woff2'),
+    url('/fonts/Axiforma-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src:
+    url('/fonts/Axiforma-Medium.woff2') format('woff2'),
+    url('/fonts/Axiforma-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src:
+    url('/fonts/Axiforma-SemiBold.woff2') format('woff2'),
+    url('/fonts/Axiforma-SemiBold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Axiforma';
+  src:
+    url('/fonts/Axiforma-Bold.woff2') format('woff2'),
+    url('/fonts/Axiforma-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Slow decorative motions for watermarks and ring decorations */
+@keyframes pwi-slow-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pwi-slow-pulse {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.04) translateY(-10px);
+  }
+}
+
+@keyframes pwi-slow-float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(14px, -8px);
+  }
+  50% {
+    transform: translate(-6px, 6px);
+  }
+  75% {
+    transform: translate(10px, 4px);
+  }
+}
+
+@keyframes pwi-pulse-dot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 168, 67, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 7px rgba(212, 168, 67, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 168, 67, 0);
+  }
+}
+
+.pwi-wm-spin {
+  animation:
+    pwi-slow-rotate 120s linear infinite,
+    pwi-slow-pulse 12s ease-in-out infinite;
+}
+
+.pwi-wm-float {
+  animation: pwi-slow-float 28s ease-in-out infinite;
+}
+
+.pwi-pulse-dot {
+  animation: pwi-pulse-dot 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pwi-wm-spin,
+  .pwi-wm-float,
+  .pwi-pulse-dot {
+    animation: none;
+  }
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #1a1a2e;
+  background-color: #f7f5ef;
+  background-image: radial-gradient(
+    circle at 88% -8%,
+    rgba(212, 168, 67, 0.1),
+    transparent 42%
+  );
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Accessible focus ring, matching the gold accent */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid rgba(212, 168, 67, 0.85);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: #d4a843;
+  color: #08080d;
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  letter-spacing: 0;
+}
+
+/* Glassmorphism surface — translucent panel with backdrop blur */
+.pwi-glass {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.pwi-glass-light {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(26, 26, 46, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Concentric decorative ring circle (bleeds off section edges) */
+.pwi-ring-decor {
+  border-radius: 9999px;
+  border: 1px solid rgba(212, 168, 67, 0.16);
+  box-shadow:
+    0 0 0 48px rgba(212, 168, 67, 0.05),
+    0 0 0 120px rgba(212, 168, 67, 0.035),
+    0 0 0 220px rgba(212, 168, 67, 0.02);
+  pointer-events: none;
+}
+
+/* Pill buttons with colored glow shadows */
+.pwi-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  border-radius: 9999px;
+  padding: 0.65rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    transform 200ms ease,
+    box-shadow 200ms ease,
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease;
+}
+
+.pwi-btn:hover {
+  transform: translateY(-1px);
+}
+
+.pwi-btn-primary {
+  background: #d4a843;
+  color: #08080d;
+  box-shadow: 0 12px 28px -14px rgba(212, 168, 67, 0.75);
+}
+
+.pwi-btn-primary:hover {
+  background: #dcc072;
+  box-shadow: 0 16px 34px -14px rgba(212, 168, 67, 0.85);
+}
+
+.pwi-btn-dark {
+  background: #1a1a2e;
+  color: #fff;
+  box-shadow: 0 12px 28px -16px rgba(26, 26, 46, 0.6);
+}
+
+.pwi-btn-dark:hover {
+  background: #232346;
+}
+
+.pwi-btn-outline {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(26, 26, 46, 0.16);
+  color: #1a1a2e;
+}
+
+.pwi-btn-outline:hover {
+  border-color: rgba(212, 168, 67, 0.7);
+  color: #a37e2b;
+}
+
+.pwi-btn-ghost-light {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  color: #fff;
+}
+
+.pwi-btn-ghost-light:hover {
+  border-color: rgba(212, 168, 67, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.pwi-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.pwi-eyebrow::before {
+  content: "";
+  width: 2rem;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.75;
+}
+
+.pwi-surface {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(26, 26, 46, 0.08);
+  box-shadow: 0 20px 60px rgba(26, 26, 46, 0.08);
+}
+
+.pwi-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #fff;
+  border: 1px solid rgba(26, 26, 46, 0.1);
+  box-shadow: 0 18px 48px rgba(26, 26, 46, 0.07);
+}
+
+.pwi-card-accent::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, #d4a843, rgba(212, 168, 67, 0.12));
+}
+
+.pwi-card-hover {
+  transition:
+    transform 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.pwi-card-hover:hover {
+  transform: translateY(-0.25rem);
+  border-color: rgba(212, 168, 67, 0.68);
+  box-shadow: 0 24px 64px rgba(26, 26, 46, 0.12);
+}
+
+.pwi-soft-band {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(247, 245, 239, 0.96)),
+    #f7f5ef;
+  border-block: 1px solid rgba(26, 26, 46, 0.08);
+}
+
+.pwi-icon-box {
+  display: inline-flex;
+  width: 3.5rem;
+  height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: #08080d;
+  color: #d4a843;
+  box-shadow: 0 16px 36px rgba(8, 8, 13, 0.18);
+}
+
+.pwi-number-badge {
+  display: inline-flex;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.75rem;
+  background: #d4a843;
+  color: #08080d;
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.pwi-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid rgba(26, 26, 46, 0.1);
+  background: rgba(247, 245, 239, 0.76);
+  padding: 0.45rem 0.75rem;
+  color: #55566b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pwi-check-row {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  border: 1px solid rgba(26, 26, 46, 0.08);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 0.95rem 1rem;
+}
+
+.pwi-panel-dark {
+  background:
+    radial-gradient(circle at 12% 0%, rgba(212, 168, 67, 0.12), transparent 38%),
+    linear-gradient(160deg, #232346 0%, #1a1a2e 46%, #08080d 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient navy section surface with soft gold glows */
+.pwi-section-dark {
+  background:
+    radial-gradient(circle at 8% 0%, rgba(212, 168, 67, 0.14), transparent 34%),
+    radial-gradient(circle at 100% 18%, rgba(58, 58, 125, 0.4), transparent 42%),
+    linear-gradient(180deg, #1a1a2e 0%, #101022 55%, #08080d 100%);
+}
+
+/* Card image that zooms gently when its card is hovered */
+.pwi-zoom-img {
+  transition: transform 450ms ease;
+}
+
+.group:hover .pwi-zoom-img {
+  transform: scale(1.06);
+}
+
+.pwi-image-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 18rem;
+  background: #1a1a2e;
+}
+
+.pwi-image-panel img {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+}
+
+.pwi-image-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 8, 13, 0.05), rgba(8, 8, 13, 0.66));
+}
+
+.pwi-admin-page {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.pwi-admin-title {
+  font-family: var(--font-serif);
+  color: #1a1a2e;
+  font-weight: 800;
+}
+
+.pwi-admin-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(26, 26, 46, 0.08);
+  box-shadow: 0 14px 40px rgba(26, 26, 46, 0.06);
+}
+
+.admin-content > * {
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a2e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2d2d5e;
+}
+
+/* Admin dark mode overrides */
+.admin-dark {
+  background-color: #13132a !important;
+}
+
+.admin-dark .admin-header {
+  background-color: rgba(19, 19, 42, 0.9) !important;
+  border-color: #2d2d45 !important;
+}
+
+/* Sidebar stays distinctly darker in dark mode */
+.admin-dark aside {
+  background-color: #08081a !important;
+  border-right: 1px solid #1a1a30;
+}
+
+.admin-dark .admin-header-title {
+  color: #e5e5e5 !important;
+}
+
+.admin-dark .admin-dark-toggle {
+  color: #9ca3af !important;
+}
+
+.admin-dark .admin-dark-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.admin-dark .admin-content {
+  color: #e5e5e5;
+}
+
+.admin-dark .pwi-admin-title {
+  color: #f5f5f5;
+}
+
+.admin-dark .pwi-admin-card {
+  background: #1c1c35;
+  border-color: #2d2d45;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+/* Dark mode: override white backgrounds to dark surfaces */
+/* Cards & surfaces — lighter than background for layering */
+.admin-dark .bg-white {
+  background-color: #1c1c35 !important;
+}
+
+/* Main background areas */
+.admin-dark .bg-gray-50 {
+  background-color: #13132a !important;
+}
+
+.admin-dark .bg-gray-100 {
+  background-color: #1c1c35 !important;
+}
+
+.admin-dark .bg-white\/80 {
+  background-color: rgba(28, 28, 53, 0.9) !important;
+}
+
+/* Dark mode: text color overrides */
+.admin-dark .text-navy-800,
+.admin-dark .text-navy-900,
+.admin-dark .text-gray-900 {
+  color: #e5e5e5 !important;
+}
+
+.admin-dark .text-gray-800,
+.admin-dark .text-gray-700 {
+  color: #d1d5db !important;
+}
+
+.admin-dark .text-gray-600,
+.admin-dark .text-gray-500 {
+  color: #9ca3af !important;
+}
+
+/* Dark mode: border overrides */
+.admin-dark .border-gray-200,
+.admin-dark .border-gray-100 {
+  border-color: #2d2d45 !important;
+}
+
+.admin-dark .ring-gray-100,
+.admin-dark .ring-gray-200 {
+  --tw-ring-color: #2d2d45 !important;
+}
+
+/* Dark mode: hover states */
+.admin-dark .hover\:bg-gray-50:hover {
+  background-color: #232346 !important;
+}
+
+.admin-dark .hover\:bg-gray-100:hover {
+  background-color: #232346 !important;
+}
+
+/* Dark mode: divide color */
+.admin-dark .divide-gray-200 > :not(:first-child) {
+  border-color: #2d2d45 !important;
+}
+
+/* Dark mode: shadow adjustments */
+.admin-dark .shadow-sm,
+.admin-dark .shadow,
+.admin-dark .shadow-md,
+.admin-dark .shadow-lg {
+  --tw-shadow-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Dark mode: input/form overrides */
+.admin-dark input,
+.admin-dark textarea,
+.admin-dark select {
+  background-color: #1a1a2e !important;
+  border-color: #2d2d45 !important;
+  color: #e5e5e5 !important;
+}
+
+.admin-dark input::placeholder,
+.admin-dark textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Dark mode: table overrides */
+.admin-dark th {
+  background-color: #151525 !important;
+  color: #9ca3af !important;
+  border-color: #2d2d45 !important;
+}
+
+.admin-dark td {
+  border-color: #2d2d45 !important;
+}
+
+.admin-dark tr:hover {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Dark mode: scrollbar */
+.admin-dark ::-webkit-scrollbar-track {
+  background: #0f0f1a;
+}
+
+.admin-dark ::-webkit-scrollbar-thumb {
+  background: #2d2d45;
+}
+
+.admin-dark ::-webkit-scrollbar-thumb:hover {
+  background: #3a3a5c;
+}
+
+/* React Quill overrides */
+.ql-toolbar.ql-snow {
+  border-color: #e5e7eb !important;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.ql-container.ql-snow {
+  border-color: #e5e7eb !important;
+  border-radius: 0 0 0.5rem 0.5rem;
+  min-height: 200px;
+  font-family: var(--font-sans);
+}
+
+/* Markdown / rich-text content — blog detail + editor preview */
+.pwi-prose {
+  color: #374151;
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  word-break: break-word;
+}
+.pwi-prose > :first-child {
+  margin-top: 0;
+}
+.pwi-prose > :last-child {
+  margin-bottom: 0;
+}
+.pwi-prose h1,
+.pwi-prose h2,
+.pwi-prose h3,
+.pwi-prose h4 {
+  font-family: var(--font-serif);
+  color: #1a1a2e;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 2rem;
+  margin-bottom: 0.85rem;
+}
+.pwi-prose h1 {
+  font-size: 2.1rem;
+}
+.pwi-prose h2 {
+  font-size: 1.7rem;
+}
+.pwi-prose h3 {
+  font-size: 1.35rem;
+}
+.pwi-prose h4 {
+  font-size: 1.15rem;
+}
+.pwi-prose p {
+  margin: 1.1rem 0;
+}
+.pwi-prose a {
+  color: #c49a35;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(196, 154, 53, 0.35);
+}
+.pwi-prose a:hover {
+  color: #a37e2b;
+  border-bottom-color: #a37e2b;
+}
+.pwi-prose strong {
+  color: #1a1a2e;
+  font-weight: 700;
+}
+.pwi-prose em {
+  font-style: italic;
+}
+.pwi-prose ul,
+.pwi-prose ol {
+  margin: 1.1rem 0;
+  padding-left: 1.5rem;
+}
+.pwi-prose ul {
+  list-style: disc;
+}
+.pwi-prose ol {
+  list-style: decimal;
+}
+.pwi-prose li {
+  margin: 0.4rem 0;
+}
+.pwi-prose li::marker {
+  color: #c49a35;
+}
+.pwi-prose blockquote {
+  margin: 1.5rem 0;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  border-left: 4px solid #d4a843;
+  background: rgba(212, 168, 67, 0.06);
+  color: #4b5563;
+  font-style: italic;
+}
+.pwi-prose blockquote p {
+  margin: 0.5rem 0;
+}
+.pwi-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.875em;
+  background: #f3f0e7;
+  color: #7d6121;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+}
+.pwi-prose pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: #1a1a2e;
+  color: #f3ead0;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+.pwi-prose pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  font-size: 0.875rem;
+}
+.pwi-prose img {
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  width: 100%;
+  height: auto;
+}
+.pwi-prose hr {
+  margin: 2rem 0;
+  border: 0;
+  border-top: 1px solid rgba(26, 26, 46, 0.12);
+}
+.pwi-prose table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.pwi-prose th,
+.pwi-prose td {
+  border: 1px solid rgba(26, 26, 46, 0.12);
+  padding: 0.6rem 0.85rem;
+  text-align: left;
+}
+.pwi-prose th {
+  background: #f7f5ef;
+  font-weight: 700;
+  color: #1a1a2e;
+}

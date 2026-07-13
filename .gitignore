@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+server/uploads/*
+!server/uploads/.gitkeep
+*.log
+
+# Local assets & agent tooling
+font.zip
+*.docx
+.claude/

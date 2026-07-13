@@ -1,0 +1,20 @@
+{
+  "name": "peoplewhoinspire",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "build": "cd server && npm run build && cd ../client && npm run build",
+    "lint": "cd client && npm run lint",
+    "typecheck": "cd server && npm run typecheck && cd ../client && npm run typecheck",
+    "test": "cd server && npm test && cd ../client && npm test",
+    "test:coverage": "cd client && npm run test:coverage",
+    "seed": "cd server && npm run seed",
+    "install:all": "cd server && npm install && cd ../client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

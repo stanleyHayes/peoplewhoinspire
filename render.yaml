@@ -1,0 +1,35 @@
+# Render Blueprint — deploys the PWI API as a web service.
+# Docs: https://render.com/docs/blueprint-spec
+# The client deploys separately to Vercel (see client/vercel.json).
+services:
+  - type: web
+    name: peoplewhoinspire-api
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    autoDeploy: true
+    rootDir: server
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      # Secrets & environment-specific values — set in the Render dashboard.
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CLOUDINARY_IMAGE_FOLDER
+        value: people-who-inspire/images
+      - key: CLOUDINARY_AVATAR_FOLDER
+        value: people-who-inspire/avatars
