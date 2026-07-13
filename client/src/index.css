@@ -946,3 +946,20 @@ select {
   font-weight: 700;
   color: #1a1a2e;
 }
+
+/* Circular reveal theme transition (View Transitions API).
+   The new theme snapshot is clipped to an expanding circle animated
+   from the toggle origin; the old snapshot stays put underneath. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: -1;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}

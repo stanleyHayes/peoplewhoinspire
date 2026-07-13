@@ -8,6 +8,7 @@ import {
 import AdminSidebar from './AdminSidebar';
 import { useAuth } from '../../hooks/useAuth';
 import AdminHelpDropdown from './AdminHelpDropdown';
+import { runThemeReveal } from '../../utils/themeReveal';
 
 export interface AdminRouteMeta {
   title: string;
@@ -204,7 +205,13 @@ export default function AdminLayout() {
   }, [darkMode]);
 
   const toggleCollapsed = () => setCollapsed((prev) => !prev);
-  const toggleDarkMode = () => setDarkMode((prev) => !prev);
+  const toggleDarkMode = (originX?: number, originY?: number) => {
+    runThemeReveal(
+      originX ?? window.innerWidth - 48,
+      originY ?? 48,
+      () => setDarkMode((prev) => !prev),
+    );
+  };
 
   useEffect(() => {
     try {

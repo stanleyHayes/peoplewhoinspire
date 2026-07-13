@@ -155,16 +155,18 @@ function NavItemLink({
       <Link
         to={item.path}
         onClick={onClick}
-        className={`relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all duration-200 ${
+        className={`relative flex items-center gap-3 rounded-xl text-sm transition-all duration-200 ${
+          collapsed ? 'justify-center px-0 py-2' : 'px-3 py-2.5'
+        } ${
           isActive
             ? 'bg-gold-400 text-navy-950 shadow-[0_10px_24px_-10px_rgba(212,168,67,0.8)]'
             : 'text-gray-400 hover:bg-white/10 hover:text-white'
-        } ${collapsed ? 'justify-center px-0' : ''}`}
+        }`}
       >
         <item.icon className="shrink-0 text-base" aria-hidden="true" />
         <span
           className={`min-w-0 transition-all duration-300 ${
-            collapsed ? 'w-0 overflow-hidden opacity-0' : 'w-auto opacity-100'
+            collapsed ? 'h-0 w-0 overflow-hidden opacity-0' : 'w-auto opacity-100'
           }`}
         >
           <span className="block truncate font-semibold">{item.label}</span>
@@ -202,17 +204,7 @@ function NavGroupSection({
 
   if (collapsed) {
     return (
-      <div className="space-y-1 border-t border-white/10 pt-3 first:border-t-0 first:pt-0">
-        <div className="group relative flex justify-center">
-          <div
-            className={`flex h-9 w-9 items-center justify-center rounded-lg ${
-              groupActive ? 'bg-white/10 text-gold-300' : 'text-gray-500'
-            }`}
-          >
-            <Icon aria-hidden="true" />
-          </div>
-          <Tooltip label={group.title} helper={group.eyebrow} />
-        </div>
+      <div className="space-y-0.5 border-t border-white/10 pt-2 first:border-t-0 first:pt-0">
         {group.items.map((item) => (
           <NavItemLink
             key={item.path}
@@ -324,8 +316,8 @@ export default function AdminSidebar({
 
     return (
       <aside
-        className={`fixed left-0 top-0 z-30 flex h-screen shrink-0 flex-col overflow-hidden shadow-2xl shadow-navy-950/20 transition-all duration-300 ${
-          effectiveCollapsed ? 'w-[78px]' : 'w-72'
+        className={`fixed left-0 top-0 z-30 flex h-screen shrink-0 flex-col shadow-2xl shadow-navy-950/20 transition-all duration-300 ${
+          effectiveCollapsed ? 'w-[78px] overflow-visible' : 'w-72 overflow-hidden'
         }`}
         style={{
           background:
@@ -356,7 +348,11 @@ export default function AdminSidebar({
           </Link>
         </div>
 
-        <nav className="flex-1 space-y-4 overflow-y-auto px-3 py-4">
+        <nav
+          className={`flex-1 px-3 ${
+            effectiveCollapsed ? 'space-y-2 overflow-visible py-2' : 'space-y-4 overflow-y-auto py-4'
+          }`}
+        >
           {navGroups.map((group) => (
             <NavGroupSection
               key={group.id}

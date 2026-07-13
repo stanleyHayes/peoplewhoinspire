@@ -25,7 +25,7 @@ interface AdminHelpDropdownProps {
   darkMode: boolean;
   onLogout: () => void;
   onReplayTour: () => void;
-  onToggleDarkMode: () => void;
+  onToggleDarkMode: (originX?: number, originY?: number) => void;
   pageMeta: AdminRouteMeta;
   pathname: string;
 }
@@ -347,7 +347,7 @@ export default function AdminHelpDropdown({
               </button>
               <button
                 type="button"
-                onClick={onToggleDarkMode}
+                onClick={(event) => onToggleDarkMode(event.clientX, event.clientY)}
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-transparent px-4 py-2.5 text-sm font-semibold text-navy-900 transition-colors hover:border-gold-200 hover:bg-gold-50/60"
               >
                 {darkMode ? <FaSun className="text-gold-500" /> : <FaMoon className="text-gold-500" />}
