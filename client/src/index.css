@@ -505,157 +505,211 @@ select {
   background: #2d2d5e;
 }
 
-/* Admin dark mode overrides */
+/* Admin dark mode overrides
+ * Palette based on Material Dark / GitHub Dark / Linear guidance:
+ *  - no pure black: base #12151d (dark slate with a hint of brand navy)
+ *  - elevation = LIGHTER surfaces (cards #1a1e29 sit above canvas #12151d)
+ *  - 1px borders at ~8% white instead of shadows for separation
+ *  - off-white text (#e8eaf0), secondary #aab2c2, muted #8b93a5 — all WCAG AA
+ *  - gold accent #d4a843 kept as-is (reads well on dark slate)
+ */
 .admin-dark {
-  background-color: #13132a !important;
+  background-color: #12151d !important;
+  color-scheme: dark;
 }
 
 .admin-dark .admin-header {
-  background-color: rgba(19, 19, 42, 0.9) !important;
-  border-color: #2d2d45 !important;
+  background-color: rgba(18, 21, 29, 0.85) !important;
+  border-color: #262c3a !important;
 }
 
-/* Sidebar stays distinctly darker in dark mode */
+/* Sidebar sits one step deeper than the canvas */
 .admin-dark aside {
-  background-color: #08081a !important;
-  border-right: 1px solid #1a1a30;
+  background-color: #0c0f16 !important;
+  border-right: 1px solid #1c2230;
 }
 
 .admin-dark .admin-header-title {
-  color: #e5e5e5 !important;
+  color: #e8eaf0 !important;
 }
 
 .admin-dark .admin-dark-toggle {
-  color: #9ca3af !important;
+  color: #aab2c2 !important;
 }
 
 .admin-dark .admin-dark-toggle:hover {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.06) !important;
 }
 
 .admin-dark .admin-content {
-  color: #e5e5e5;
+  color: #e8eaf0;
 }
 
 .admin-dark .pwi-admin-title {
-  color: #f5f5f5;
+  color: #f0f2f7;
 }
 
 .admin-dark .pwi-admin-card {
-  background: #1c1c35;
-  border-color: #2d2d45;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  background: #1a1e29;
+  border-color: #262c3a;
+  box-shadow: none;
 }
 
-/* Dark mode: override white backgrounds to dark surfaces */
-/* Cards & surfaces — lighter than background for layering */
+/* Elevated surfaces — one step LIGHTER than the canvas */
 .admin-dark .bg-white {
-  background-color: #1c1c35 !important;
+  background-color: #1a1e29 !important;
 }
 
-/* Main background areas */
+/* Recessed areas match the canvas */
 .admin-dark .bg-gray-50 {
-  background-color: #13132a !important;
+  background-color: #12151d !important;
 }
 
 .admin-dark .bg-gray-100 {
-  background-color: #1c1c35 !important;
+  background-color: #1a1e29 !important;
 }
 
 .admin-dark .bg-white\/80 {
-  background-color: rgba(28, 28, 53, 0.9) !important;
+  background-color: rgba(26, 30, 41, 0.9) !important;
 }
 
-/* Dark mode: text color overrides */
+/* Text hierarchy: off-white → soft gray (never pure white) */
 .admin-dark .text-navy-800,
 .admin-dark .text-navy-900,
 .admin-dark .text-gray-900 {
-  color: #e5e5e5 !important;
+  color: #e8eaf0 !important;
 }
 
 .admin-dark .text-gray-800,
 .admin-dark .text-gray-700 {
-  color: #d1d5db !important;
+  color: #c4cad6 !important;
 }
 
 .admin-dark .text-gray-600,
 .admin-dark .text-gray-500 {
-  color: #9ca3af !important;
+  color: #8b93a5 !important;
 }
 
-/* Dark mode: border overrides */
+/* Borders: ~8% white hairlines */
 .admin-dark .border-gray-200,
 .admin-dark .border-gray-100 {
-  border-color: #2d2d45 !important;
+  border-color: #262c3a !important;
 }
 
 .admin-dark .ring-gray-100,
 .admin-dark .ring-gray-200 {
-  --tw-ring-color: #2d2d45 !important;
+  --tw-ring-color: #262c3a !important;
 }
 
-/* Dark mode: hover states */
-.admin-dark .hover\:bg-gray-50:hover {
-  background-color: #232346 !important;
-}
-
+/* Hover states: raised surface */
+.admin-dark .hover\:bg-gray-50:hover,
 .admin-dark .hover\:bg-gray-100:hover {
-  background-color: #232346 !important;
+  background-color: #222735 !important;
 }
 
-/* Dark mode: divide color */
 .admin-dark .divide-gray-200 > :not(:first-child) {
-  border-color: #2d2d45 !important;
+  border-color: #262c3a !important;
 }
 
-/* Dark mode: shadow adjustments */
+/* Shadows barely read on dark — flatten them, borders do the work */
 .admin-dark .shadow-sm,
 .admin-dark .shadow,
 .admin-dark .shadow-md,
 .admin-dark .shadow-lg {
-  --tw-shadow-color: rgba(0, 0, 0, 0.3) !important;
+  --tw-shadow-color: rgba(0, 0, 0, 0.45) !important;
 }
 
-/* Dark mode: input/form overrides */
+/* Form fields: recessed surface, hairline border */
 .admin-dark input,
 .admin-dark textarea,
 .admin-dark select {
-  background-color: #1a1a2e !important;
-  border-color: #2d2d45 !important;
-  color: #e5e5e5 !important;
+  background-color: #161a24 !important;
+  border-color: #262c3a !important;
+  color: #e8eaf0 !important;
 }
 
 .admin-dark input::placeholder,
 .admin-dark textarea::placeholder {
-  color: #6b7280 !important;
+  color: #6b7383 !important;
 }
 
-/* Dark mode: table overrides */
+/* Tables */
 .admin-dark th {
-  background-color: #151525 !important;
-  color: #9ca3af !important;
-  border-color: #2d2d45 !important;
+  background-color: #14171f !important;
+  color: #8b93a5 !important;
+  border-color: #262c3a !important;
 }
 
 .admin-dark td {
-  border-color: #2d2d45 !important;
+  border-color: #262c3a !important;
 }
 
 .admin-dark tr:hover {
   background-color: rgba(255, 255, 255, 0.03) !important;
 }
 
-/* Dark mode: scrollbar */
+/* Scrollbar */
 .admin-dark ::-webkit-scrollbar-track {
-  background: #0f0f1a;
+  background: #0c0f16;
 }
 
 .admin-dark ::-webkit-scrollbar-thumb {
-  background: #2d2d45;
+  background: #2a3040;
 }
 
 .admin-dark ::-webkit-scrollbar-thumb:hover {
-  background: #3a3a5c;
+  background: #363d4f;
+}
+
+/* Cream strips & light tints → dark equivalents */
+.admin-dark .bg-\[\#fbfaf6\] {
+  background-color: #14171f !important;
+}
+
+.admin-dark .text-navy-950 {
+  color: #e8eaf0 !important;
+}
+
+.admin-dark .text-navy-700 {
+  color: #c4cad6 !important;
+}
+
+/* Light gradient headers collapse to the elevated surface */
+.admin-dark [class*='bg-gradient-to-br'],
+.admin-dark [class*='bg-gradient-to-r'] {
+  background-image: none !important;
+}
+
+/* Gold-tinted fills/hovers → translucent gold on dark */
+.admin-dark .bg-gold-50 {
+  background-color: rgba(212, 168, 67, 0.1) !important;
+}
+
+.admin-dark .hover\:bg-gold-50:hover,
+.admin-dark .hover\:bg-gold-50\/60:hover,
+.admin-dark .hover\:bg-gold-50\/40:hover {
+  background-color: rgba(212, 168, 67, 0.12) !important;
+}
+
+.admin-dark .bg-red-50 {
+  background-color: rgba(220, 38, 38, 0.1) !important;
+}
+
+.admin-dark .hover\:bg-red-50:hover,
+.admin-dark .hover\:bg-red-100:hover {
+  background-color: rgba(220, 38, 38, 0.14) !important;
+}
+
+.admin-dark .bg-amber-50 {
+  background-color: rgba(245, 158, 11, 0.1) !important;
+}
+
+.admin-dark .bg-emerald-50 {
+  background-color: rgba(5, 150, 105, 0.1) !important;
+}
+
+.admin-dark .bg-blue-50 {
+  background-color: rgba(37, 99, 235, 0.1) !important;
 }
 
 /* React Quill overrides */
