@@ -674,10 +674,32 @@ select {
   color: #c4cad6 !important;
 }
 
-/* Light gradient headers collapse to the elevated surface */
-.admin-dark [class*='bg-gradient-to-br'],
-.admin-dark [class*='bg-gradient-to-r'] {
+/* Light gradient headers collapse to a dark gold wash (targeted — intentional
+ * dark/gold gradient buttons elsewhere must keep their gradients) */
+.admin-dark .bg-gradient-to-br.from-gold-50 {
+  background-image: linear-gradient(to bottom right, rgba(212, 168, 67, 0.12), #1a1e29) !important;
+}
+
+/* Arbitrary brand-navy text on typography elements → off-white.
+ * Scoped to text elements so gold gradient buttons keep their dark label. */
+.admin-dark h1.text-\[\#1a1a2e\],
+.admin-dark h2.text-\[\#1a1a2e\],
+.admin-dark h3.text-\[\#1a1a2e\],
+.admin-dark p.text-\[\#1a1a2e\],
+.admin-dark label.text-\[\#1a1a2e\],
+.admin-dark span.text-\[\#1a1a2e\] {
+  color: #e8eaf0 !important;
+}
+
+/* Table rows: flatten light hover gradients */
+.admin-dark tr:hover {
   background-image: none !important;
+}
+
+/* Light amber icon tile on the add-member card */
+.admin-dark .from-\[\#d4a843\]\/20 {
+  background-image: none !important;
+  background-color: rgba(212, 168, 67, 0.12) !important;
 }
 
 /* Gold-tinted fills/hovers → translucent gold on dark */
@@ -710,6 +732,71 @@ select {
 
 .admin-dark .bg-blue-50 {
   background-color: rgba(37, 99, 235, 0.1) !important;
+}
+
+/* Opacity variants of light gray surfaces (bg-gray-50/70 etc.) */
+.admin-dark .bg-gray-50\/50,
+.admin-dark .bg-gray-50\/70,
+.admin-dark .bg-gray-50\/80 {
+  background-color: #14171f !important;
+}
+
+.admin-dark .hover\:bg-gray-50\/50:hover,
+.admin-dark .hover\:bg-gray-50\/60:hover {
+  background-color: #222735 !important;
+}
+
+/* gray-200 fills: toggle tracks, skeletons, tour dots, icon buttons */
+.admin-dark .bg-gray-200,
+.admin-dark .bg-gray-200\/70,
+.admin-dark .bg-gray-200\/80 {
+  background-color: #2a3040 !important;
+}
+
+.admin-dark .hover\:bg-gray-200:hover {
+  background-color: #363d4f !important;
+}
+
+/* Dashed "add new" cards: translucent white → subtle dark tint, no white flash on hover */
+.admin-dark .bg-white\/50 {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.admin-dark .hover\:bg-white:hover {
+  background-color: #222735 !important;
+}
+
+.admin-dark .border-gray-300 {
+  border-color: #2a3040 !important;
+}
+
+/* Pastel icon chips → translucent dark tints */
+.admin-dark .bg-rose-50 {
+  background-color: rgba(225, 29, 72, 0.12) !important;
+}
+
+.admin-dark .bg-violet-50 {
+  background-color: rgba(124, 58, 237, 0.12) !important;
+}
+
+.admin-dark .bg-cyan-50 {
+  background-color: rgba(8, 145, 178, 0.12) !important;
+}
+
+.admin-dark .bg-sky-50 {
+  background-color: rgba(2, 132, 199, 0.12) !important;
+}
+
+.admin-dark .hover\:bg-sky-100:hover {
+  background-color: rgba(2, 132, 199, 0.18) !important;
+}
+
+.admin-dark .bg-orange-50 {
+  background-color: rgba(234, 88, 12, 0.12) !important;
+}
+
+.admin-dark .bg-purple-50 {
+  background-color: rgba(147, 51, 234, 0.12) !important;
 }
 
 /* React Quill overrides */
