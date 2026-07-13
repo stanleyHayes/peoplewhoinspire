@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { FaPlay, FaYoutube } from 'react-icons/fa';
 import type { Guest } from '../../data/guests';
-import { LIVE_SESSION } from '../../config/site';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 interface GuestCardProps {
   guest: Guest;
@@ -13,6 +13,7 @@ interface GuestCardProps {
  * and the /our-guests gallery (feedback §3.2 / §5).
  */
 export default function GuestCard({ guest, index = 0 }: GuestCardProps) {
+  const { social } = useSiteContent();
   const initials = guest.name
     .split(' ')
     .filter((p) => !p.endsWith('.'))
@@ -21,7 +22,7 @@ export default function GuestCard({ guest, index = 0 }: GuestCardProps) {
     .join('');
 
   // Link to the specific episode if we have it; otherwise fall back to the channel.
-  const watchUrl = guest.youtubeUrl || LIVE_SESSION.watchUrl;
+  const watchUrl = guest.youtubeUrl || social.youtube;
 
   return (
     <motion.div
@@ -88,7 +89,7 @@ export default function GuestCard({ guest, index = 0 }: GuestCardProps) {
           </a>
         ) : (
           <a
-            href={LIVE_SESSION.watchUrl}
+            href={social.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="pwi-btn w-full border border-navy-100 bg-white text-navy-700 hover:border-gold-300 hover:bg-gold-50"

@@ -14,7 +14,7 @@ import {
 import { FOUNDER } from '../config/site';
 import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
-import { IMAGES } from '../data/siteContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 /**
  * Founder page — Emmanuel Mbansi (feedback §6).
@@ -44,13 +44,15 @@ const founderPrinciples = [
 ];
 
 export default function FounderPage() {
+  const { images } = useSiteContent();
+
   return (
     <>
       <PageHero
         eyebrow="Founder & Executive Host"
         title="Emmanuel Mbansi"
         description="MBA Graduate - Global Leadership Convener - Founder, People Who Inspire"
-        image={IMAGES.aboutLeadership}
+        image={images.aboutLeadership}
         imageAlt="A leadership gathering representing the PWI founder story"
         icon={FaMicrophone}
         meta={

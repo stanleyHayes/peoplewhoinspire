@@ -13,17 +13,9 @@ import {
 } from 'react-icons/fa';
 import type { NavItem } from '../../config/navigation';
 import { NAV_GROUPS } from '../../config/navigation';
-import { CONTACT, LIVE_SESSION, SOCIAL } from '../../config/site';
+import { CONTACT, LIVE_SESSION } from '../../config/site';
+import { useSiteContent } from '../../context/SiteContentContext';
 import { PWIMonogram } from '../ui/PWILogo';
-
-const socials = [
-  { icon: FaFacebookF, href: SOCIAL.facebook, label: 'Facebook' },
-  { icon: FaTwitter, href: SOCIAL.twitter, label: 'Twitter' },
-  { icon: FaInstagram, href: SOCIAL.instagram, label: 'Instagram' },
-  { icon: FaLinkedinIn, href: SOCIAL.linkedin, label: 'LinkedIn' },
-  { icon: FaYoutube, href: SOCIAL.youtube, label: 'YouTube' },
-  { icon: FaWhatsapp, href: CONTACT.whatsappUrl, label: 'WhatsApp' },
-];
 
 function FooterLink({ item }: { item: NavItem }) {
   const Icon = item.icon;
@@ -52,6 +44,17 @@ function FooterLink({ item }: { item: NavItem }) {
 }
 
 export default function Footer() {
+  const { social } = useSiteContent();
+
+  const socials = [
+    { icon: FaFacebookF, href: social.facebook, label: 'Facebook' },
+    { icon: FaTwitter, href: social.twitter, label: 'Twitter' },
+    { icon: FaInstagram, href: social.instagram, label: 'Instagram' },
+    { icon: FaLinkedinIn, href: social.linkedin, label: 'LinkedIn' },
+    { icon: FaYoutube, href: social.youtube, label: 'YouTube' },
+    { icon: FaWhatsapp, href: CONTACT.whatsappUrl, label: 'WhatsApp' },
+  ];
+
   return (
     <footer className="relative overflow-hidden text-gray-300">
       {/* layered navy gradient with soft gold glows */}
@@ -119,7 +122,7 @@ export default function Footer() {
             </h2>
             <div className="mt-6 flex flex-col gap-3">
               <a
-                href={LIVE_SESSION.watchUrl}
+                href={social.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pwi-btn pwi-btn-primary w-full"

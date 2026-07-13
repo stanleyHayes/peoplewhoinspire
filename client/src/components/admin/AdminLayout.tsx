@@ -41,6 +41,11 @@ const routeMeta: Record<string, AdminRouteMeta> = {
     section: 'Content Studio',
     description: 'Coordinate sessions, dates, and recordings.',
   },
+  '/admin/site-content': {
+    title: 'Site Content',
+    section: 'Content Studio',
+    description: 'Update page hero images and social links without a redeploy.',
+  },
   '/admin/partners': {
     title: 'Partners',
     section: 'Community',

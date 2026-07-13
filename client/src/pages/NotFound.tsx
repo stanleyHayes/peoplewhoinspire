@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaArrowLeft, FaCompass, FaEnvelope, FaHome, FaYoutube } from 'react-icons/fa';
-import { LIVE_SESSION } from '../config/site';
+import { useSiteContent } from '../context/SiteContentContext';
 import Watermark from '../components/ui/Watermark';
 import Constellation from '../components/ui/Constellation';
 
@@ -13,6 +13,8 @@ const quickLinks = [
 ];
 
 export default function NotFound() {
+  const { social } = useSiteContent();
+
   return (
     <section className="pwi-section-dark relative flex min-h-[88vh] items-center overflow-hidden pt-32 text-white md:pt-36">
       <Watermark variant="africa" position="top-right" opacity={0.07} />
@@ -71,7 +73,7 @@ export default function NotFound() {
             Back to home
           </Link>
           <a
-            href={LIVE_SESSION.watchUrl}
+            href={social.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="pwi-btn pwi-btn-ghost-light px-8 py-4 text-base"

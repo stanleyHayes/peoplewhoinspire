@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthContext';
+import { SiteContentProvider } from './context/SiteContentContext';
 import ScrollToTop from './components/motion/ScrollToTop';
 import Layout from './components/layout/Layout';
 import AdminLayout from './components/admin/AdminLayout';
@@ -27,6 +28,7 @@ import ManagePosts from './pages/admin/ManagePosts';
 import ManagePrograms from './pages/admin/ManagePrograms';
 import ManageTeam from './pages/admin/ManageTeam';
 import ManageEvents from './pages/admin/ManageEvents';
+import ManageSiteContent from './pages/admin/ManageSiteContent';
 import ManagePartners from './pages/admin/ManagePartners';
 import ManageTestimonials from './pages/admin/ManageTestimonials';
 import ManageSubscribers from './pages/admin/ManageSubscribers';
@@ -38,6 +40,7 @@ import AuditLogs from './pages/admin/AuditLogs';
 export default function App() {
   return (
     <AuthProvider>
+      <SiteContentProvider>
       <BrowserRouter>
         <ScrollToTop />
         <Toaster
@@ -91,6 +94,7 @@ export default function App() {
             <Route path="programs" element={<ManagePrograms />} />
             <Route path="team" element={<ManageTeam />} />
             <Route path="events" element={<ManageEvents />} />
+            <Route path="site-content" element={<ManageSiteContent />} />
             <Route path="partners" element={<ManagePartners />} />
             <Route path="testimonials" element={<ManageTestimonials />} />
             <Route path="subscribers" element={<ManageSubscribers />} />
@@ -102,6 +106,7 @@ export default function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      </SiteContentProvider>
     </AuthProvider>
   );
 }

@@ -11,9 +11,10 @@ import PageHero from '../components/ui/PageHero';
 import Markdown from '../components/ui/Markdown';
 import { PublicArticleSkeleton } from '../components/ui/Skeleton';
 import Watermark from '../components/ui/Watermark';
-import { IMAGES } from '../data/siteContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function BlogPostPage() {
+  const { images } = useSiteContent();
   const { slug } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
@@ -121,7 +122,7 @@ export default function BlogPostPage() {
         eyebrow={post.category || 'PWI Blog'}
         title={post.title}
         description={post.excerpt || SITE.defaultDescription}
-        image={post.coverImage || post.image || IMAGES.blogEditorial}
+        image={post.coverImage || post.image || images.blogEditorial}
         imageAlt={post.title}
         icon={FaTag}
         actions={[

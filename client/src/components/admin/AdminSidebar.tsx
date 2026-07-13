@@ -19,6 +19,7 @@ import {
   FaChevronLeft,
   FaChevronDown,
   FaShieldAlt,
+  FaImages,
 } from 'react-icons/fa';
 import { useAuth } from '../../hooks/useAuth';
 import { PWIMonogram } from '../ui/PWILogo';
@@ -74,6 +75,12 @@ const navGroups: NavGroup[] = [
         helper: 'Pathways and offers',
       },
       { icon: FaCalendarAlt, label: 'Events', path: '/admin/events', helper: 'Sessions and dates' },
+      {
+        icon: FaImages,
+        label: 'Site Content',
+        path: '/admin/site-content',
+        helper: 'Heroes and socials',
+      },
     ],
   },
   {

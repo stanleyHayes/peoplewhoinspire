@@ -81,12 +81,14 @@ const seedDatabase = async () => {
       { key: 'siteUrl', value: 'https://www.peoplewhoinspire.global', group: 'general' },
       { key: 'contactEmail', value: 'info@peoplewhoinspire.global', group: 'general' },
       { key: 'founderName', value: 'Emmanuel Mbansi', group: 'general' },
-      // Social — standardized handle (feedback §7). Update URLs once confirmed.
-      { key: 'twitter', value: '@peoplewhoinspire', group: 'social' },
-      { key: 'instagram', value: '@peoplewhoinspire_global', group: 'social' },
-      { key: 'linkedin', value: '', group: 'social' },
-      { key: 'youtube', value: '', group: 'social' },
-      { key: 'facebook', value: '', group: 'social' },
+      // Social — full profile URLs consumed live by the public site
+      // (merged over client/src/config/site.ts SOCIAL defaults; blank = use default).
+      { key: 'instagram_url', value: 'https://www.instagram.com/peoplewhoinspire_global', group: 'social' },
+      { key: 'instagram_handle', value: '@peoplewhoinspire_global', group: 'social' },
+      { key: 'twitter_url', value: 'https://x.com/peoplewhoinspire', group: 'social' },
+      { key: 'linkedin_url', value: 'https://www.linkedin.com/company/peoplewhoinspire', group: 'social' },
+      { key: 'youtube_url', value: 'https://www.youtube.com/@peoplewhoinspire', group: 'social' },
+      { key: 'facebook_url', value: 'https://www.facebook.com/peoplewhoinspireglobal', group: 'social' },
       { key: 'whatsapp', value: '+233 26 441 7040', group: 'social' },
       // SEO
       { key: 'metaTitle', value: 'People Who Inspire - Global Leadership Platform', group: 'seo' },

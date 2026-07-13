@@ -5,6 +5,7 @@ import { FaBars, FaTimes, FaYoutube } from 'react-icons/fa';
 import type { NavGroup, NavItem } from '../../config/navigation';
 import { NAV_GROUPS } from '../../config/navigation';
 import { LIVE_SESSION } from '../../config/site';
+import { useSiteContent } from '../../context/SiteContentContext';
 import { PWIMonogram } from '../ui/PWILogo';
 
 type NavSection = NavGroup & {
@@ -68,6 +69,7 @@ function NavDestination({
 }
 
 export default function Navbar() {
+  const { social } = useSiteContent();
   const [isOpen, setIsOpen] = useState(false);
   const [openSection, setOpenSection] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -99,7 +101,7 @@ export default function Navbar() {
             {LIVE_SESSION.schedule} · Live on YouTube
           </span>
           <a
-            href={LIVE_SESSION.watchUrl}
+            href={social.youtube}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-gold-300 transition-colors hover:text-gold-200"
@@ -114,8 +116,8 @@ export default function Navbar() {
       <nav
         className={`relative border-b transition-all duration-300 ${
           scrolled
-            ? 'border-navy-950/10 bg-white/85 shadow-lg shadow-navy-950/10 backdrop-blur-xl'
-            : 'border-transparent bg-white/55 backdrop-blur-md'
+            ? 'border-navy-950/10 bg-white/95 shadow-lg shadow-navy-950/10 backdrop-blur-xl'
+            : 'border-navy-950/5 bg-[#f7f5ef]/95 shadow-sm shadow-navy-950/5 backdrop-blur-md'
         }`}
       >
         {/* gold gradient hairline that appears on scroll */}

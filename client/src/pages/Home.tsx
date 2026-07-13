@@ -21,10 +21,11 @@ import { CONTACT, LIVE_SESSION } from '../config/site';
 import { PAST_GUESTS } from '../data/guests';
 import {
   FALLBACK_POSTS,
-  IMAGES,
   PROGRAM_VISUALS,
   getFallbackEvents,
 } from '../data/siteContent';
+import { PROGRAM_IMAGE_KEYS } from '../config/editableContent';
+import { useSiteContent, type SiteImages } from '../context/SiteContentContext';
 import api from '../services/api';
 import type { Event as SiteEvent, Post } from '../types';
 import { Reveal, Reveal3D } from '../components/motion/Reveal';
@@ -63,13 +64,13 @@ const operatingPillars = [
   },
 ];
 
-const pathways = [
+const pathways = (images: SiteImages) => [
   {
     title: 'Watch the conversations',
     label: 'Weekly signal',
     description: 'Join the Saturday live room and learn from leaders who have done the work in public.',
     to: '/conversations',
-    image: PROGRAM_VISUALS.conversations.image,
+    image: images[PROGRAM_IMAGE_KEYS.conversations],
     imageAlt: PROGRAM_VISUALS.conversations.imageAlt,
     icon: FaYoutube,
   },
@@ -78,7 +79,7 @@ const pathways = [
     label: 'Practical pathways',
     description: 'Explore mentorship, masterclasses, and community experiences for purpose-led growth.',
     to: '/programs',
-    image: PROGRAM_VISUALS.mentorship.image,
+    image: images[PROGRAM_IMAGE_KEYS.mentorship],
     imageAlt: PROGRAM_VISUALS.mentorship.imageAlt,
     icon: FaBookOpen,
   },
@@ -87,7 +88,7 @@ const pathways = [
     label: 'Deeper formation',
     description: 'Step into a cohort designed for accountability, exposure, and hands-on leadership practice.',
     to: '/fellowship',
-    image: PROGRAM_VISUALS.fellowship.image,
+    image: images[PROGRAM_IMAGE_KEYS.fellowship],
     imageAlt: PROGRAM_VISUALS.fellowship.imageAlt,
     icon: FaUsers,
   },
@@ -95,40 +96,40 @@ const pathways = [
 
 const guestHighlights = PAST_GUESTS.slice(0, 6);
 
-const postImageFallbacks = [
+const postImageFallbacks = (images: SiteImages) => [
   {
     pattern: /community|mentorship|network|together/i,
-    image: IMAGES.communityStudy,
+    image: images.communityStudy,
   },
   {
     pattern: /conversation|youtube|guest|dialogue|story/i,
-    image: IMAGES.conversationsTable,
+    image: images.conversationsTable,
   },
   {
     pattern: /fellowship|cohort|formation/i,
-    image: IMAGES.fellowshipCohort,
+    image: images.fellowshipCohort,
   },
   {
     pattern: /program|masterclass|workshop|learning/i,
-    image: IMAGES.programsWorkshop,
+    image: images.programsWorkshop,
   },
   {
     pattern: /event|gathering|stage|live/i,
-    image: IMAGES.eventsStage,
+    image: images.eventsStage,
   },
   {
     pattern: /welcome|platform|launch|impact|leadership|purpose/i,
-    image: IMAGES.heroConversation,
+    image: images.heroConversation,
   },
 ];
 
-const defaultPostImages = [
-  IMAGES.heroConversation,
-  IMAGES.communityStudy,
-  IMAGES.conversationsTable,
+const defaultPostImages = (images: SiteImages) => [
+  images.heroConversation,
+  images.communityStudy,
+  images.conversationsTable,
 ];
 
-function getPostCardImage(post: Post, index: number) {
+function getPostCardImage(images: SiteImages, post: Post, index: number) {
   if (post.coverImage || post.image) return post.coverImage || post.image;
 
   const searchable = [
@@ -138,9 +139,10 @@ function getPostCardImage(post: Post, index: number) {
     ...(post.tags || []),
   ].join(' ');
 
+  const fallbacks = defaultPostImages(images);
   return (
-    postImageFallbacks.find((fallback) => fallback.pattern.test(searchable))?.image ||
-    defaultPostImages[index % defaultPostImages.length]
+    postImageFallbacks(images).find((fallback) => fallback.pattern.test(searchable))?.image ||
+    fallbacks[index % fallbacks.length]
   );
 }
 
@@ -154,6 +156,7 @@ function formatEventDate(event: SiteEvent) {
 }
 
 export default function Home() {
+  const { images, social } = useSiteContent();
   const [featuredEvent, setFeaturedEvent] = useState<SiteEvent>(() => getFallbackEvents()[0]);
   const [posts, setPosts] = useState<Post[]>(FALLBACK_POSTS.slice(0, 3));
   const [name, setName] = useState('');
@@ -225,7 +228,7 @@ export default function Home() {
       <section className="relative isolate overflow-hidden bg-navy-950 pt-36 text-white md:pt-44">
         <div className="absolute inset-0 -z-30 scale-[1.025]">
           <img
-            src={IMAGES.heroConversation}
+            src={images.heroConversation}
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover"
@@ -287,7 +290,7 @@ export default function Home() {
                 className="mt-9 flex flex-col gap-4 sm:flex-row"
               >
                 <a
-                  href={LIVE_SESSION.watchUrl}
+                  href={social.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="pwi-btn pwi-btn-primary px-8 py-4 text-base"
@@ -333,7 +336,7 @@ export default function Home() {
                   </span>
                 </div>
                 <a
-                  href={LIVE_SESSION.watchUrl}
+                  href={social.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="pwi-btn pwi-btn-primary mt-6 w-full"
@@ -431,7 +434,7 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
-            {pathways.map((pathway, index) => (
+            {pathways(images).map((pathway, index) => (
               <Reveal3D key={pathway.title} delay={index * 0.1} className="h-full">
                 <article className="pwi-card pwi-card-hover group h-full">
                   <Link to={pathway.to} className="flex h-full flex-col">
@@ -482,7 +485,7 @@ export default function Home() {
                 where leaders tell the truth about the work, not just the highlight reel.
               </p>
               <a
-                href={LIVE_SESSION.watchUrl}
+                href={social.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pwi-btn pwi-btn-primary mt-8"
@@ -557,7 +560,7 @@ export default function Home() {
                   <Link to={`/blog/${post.slug}`} className="grid gap-5 sm:grid-cols-[150px_1fr] sm:items-center">
                     <div className="relative h-36 overflow-hidden rounded-xl bg-navy-950">
                       <img
-                        src={getPostCardImage(post, index)}
+                        src={getPostCardImage(images, post, index)}
                         alt={post.title}
                         className="pwi-zoom-img h-full w-full object-cover"
                       />
@@ -587,7 +590,7 @@ export default function Home() {
           <div className="pwi-panel-dark relative grid overflow-hidden rounded-3xl shadow-2xl shadow-navy-950/15 lg:grid-cols-[0.92fr_1.08fr]">
             <div className="relative min-h-[340px] overflow-hidden lg:min-h-full">
               <img
-                src={IMAGES.communityStudy}
+                src={images.communityStudy}
                 alt="Purpose-driven leaders collaborating"
                 className="absolute inset-0 h-full w-full object-cover"
               />

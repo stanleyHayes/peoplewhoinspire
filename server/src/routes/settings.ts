@@ -6,8 +6,34 @@ import { logAudit } from '../middleware/auditLog';
 
 const router = Router();
 
-// GET /api/settings - Get all settings, grouped
-router.get('/', async (_req: AuthRequest, res: Response): Promise<void> => {
+// GET /api/settings/public - Public-safe settings (no auth, no secrets)
+// Exposes only CMS-editable site content: page image overrides (`siteImages`)
+// and the social profile URLs (the whole `social` group is public by nature).
+// NOTE: must be declared before '/:key' so 'public' isn't treated as a key.
+router.get('/public', async (_req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const settings = await Setting.find({
+      $or: [{ group: 'social' }, { key: 'siteImages' }],
+    });
+
+    const payload: { siteImages?: any; social: Record<string, any> } = { social: {} };
+    for (const setting of settings) {
+      if (setting.key === 'siteImages') {
+        payload.siteImages = setting.value;
+      } else {
+        payload.social[setting.key] = setting.value;
+      }
+    }
+
+    res.json(payload);
+  } catch (error) {
+    console.error('Get public settings error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// GET /api/settings - Get all settings, grouped (protected — may contain email/secrets)
+router.get('/', auth, requireRole('admin', 'superadmin'), async (_req: AuthRequest, res: Response): Promise<void> => {
   try {
     const settings = await Setting.find().sort({ group: 1, key: 1 });
 
@@ -27,8 +53,8 @@ router.get('/', async (_req: AuthRequest, res: Response): Promise<void> => {
   }
 });
 
-// GET /api/settings/:key - Get single setting by key
-router.get('/:key', async (req: AuthRequest, res: Response): Promise<void> => {
+// GET /api/settings/:key - Get single setting by key (protected)
+router.get('/:key', auth, requireRole('admin', 'superadmin'), async (req: AuthRequest, res: Response): Promise<void> => {
   try {
     const setting = await Setting.findOne({ key: req.params.key });
     if (!setting) {

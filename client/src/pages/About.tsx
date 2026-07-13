@@ -12,7 +12,7 @@ import {
 import SectionHeader from '../components/ui/SectionHeader';
 import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
-import { IMAGES } from '../data/siteContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 const values = [
   {
@@ -99,13 +99,15 @@ const operatingModel = [
 ];
 
 export default function AboutPage() {
+  const { images } = useSiteContent();
+
   return (
     <>
       <PageHero
         eyebrow="About Us"
         title={<>Our Story &amp; <span className="text-gold-400">Mission</span></>}
         description="People Who Inspire is more than an organization. It is a movement of purpose-driven leaders dedicated to transforming communities and building a better world."
-        image={IMAGES.aboutLeadership}
+        image={images.aboutLeadership}
         imageAlt="A leadership team collaborating in a bright workspace"
         icon={FaBullseye}
         stats={[

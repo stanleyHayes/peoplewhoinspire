@@ -5,8 +5,8 @@ import SectionHeader from '../components/ui/SectionHeader';
 import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
 import { GUESTS, PAST_GUESTS } from '../data/guests';
-import { LIVE_SESSION, FORMS } from '../config/site';
-import { IMAGES } from '../data/siteContent';
+import { FORMS } from '../config/site';
+import { useSiteContent } from '../context/SiteContentContext';
 
 /**
  * 2025 Conversations Gallery — "Voices That Changed Us" (feedback §5).
@@ -22,13 +22,15 @@ const seasonNotes = [
 ];
 
 export default function GuestsPage() {
+  const { images, social } = useSiteContent();
+
   return (
     <>
       <PageHero
         eyebrow="PWI Conversations - 2025 Season"
         title={<>Voices That <span className="text-gold-400">Changed Us</span></>}
         description="Every conversation on PWI features a remarkable leader with a story worth telling. Here is the 2025 season - intimate, global, and always inspiring."
-        image={IMAGES.eventsStage}
+        image={images.eventsStage}
         imageAlt="A speaker presenting to an audience"
         icon={FaYoutube}
         stats={[
@@ -110,7 +112,7 @@ export default function GuestsPage() {
               <FaUserPlus /> Nominate a Speaker
             </Link>
             <a
-              href={LIVE_SESSION.watchUrl}
+              href={social.youtube}
               target="_blank"
               rel="noopener noreferrer"
               className="pwi-btn pwi-btn-ghost-light px-8 py-4"

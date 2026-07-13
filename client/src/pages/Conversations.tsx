@@ -15,7 +15,7 @@ import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
 import { PAST_GUESTS } from '../data/guests';
 import { LIVE_SESSION } from '../config/site';
-import { IMAGES } from '../data/siteContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 const features = [
   {
@@ -44,19 +44,21 @@ const features = [
 const previewGuests = PAST_GUESTS.slice(0, 6);
 
 export default function ConversationsPage() {
+  const { images, social } = useSiteContent();
+
   return (
     <>
       <PageHero
         eyebrow="PWI Conversations"
         title={<>Dialogues That <span className="text-gold-400">Inspire</span></>}
         description={`Join intimate conversations with world-class leaders, innovators, and change-makers. New episodes stream live ${LIVE_SESSION.schedule}.`}
-        image={IMAGES.conversationsTable}
+        image={images.conversationsTable}
         imageAlt="Leaders gathered around a table in conversation"
         icon={FaMicrophone}
         actions={[
           {
             label: 'Watch Live on YouTube',
-            href: LIVE_SESSION.watchUrl,
+            href: social.youtube,
             icon: <FaYoutube className="text-lg" />,
           },
           {
@@ -127,7 +129,7 @@ export default function ConversationsPage() {
                 speaking with depth, candor, and practical generosity.
               </p>
               <a
-                href={LIVE_SESSION.watchUrl}
+                href={social.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pwi-btn mt-8 bg-red-600 px-8 py-4 text-white shadow-lg hover:bg-red-700"

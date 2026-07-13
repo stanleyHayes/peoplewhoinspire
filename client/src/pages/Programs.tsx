@@ -12,7 +12,9 @@ import {
 import SectionHeader from '../components/ui/SectionHeader';
 import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
-import { IMAGES, PROGRAM_VISUALS } from '../data/siteContent';
+import { PROGRAM_VISUALS } from '../data/siteContent';
+import { PROGRAM_IMAGE_KEYS } from '../config/editableContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 const programs = [
   {
@@ -93,13 +95,15 @@ const programs = [
 ] as const;
 
 export default function ProgramsPage() {
+  const { images } = useSiteContent();
+
   return (
     <>
       <PageHero
         eyebrow="Our Programs"
         title={<>Pathways to <span className="text-gold-400">Impact</span></>}
         description="Discover programs designed to develop, connect, and empower purpose-driven leaders at every stage of their journey."
-        image={IMAGES.programsWorkshop}
+        image={images.programsWorkshop}
         imageAlt="A workshop session with people learning together"
         icon={FaGraduationCap}
         stats={[
@@ -196,7 +200,7 @@ export default function ProgramsPage() {
                 <div className={index % 2 !== 0 ? 'lg:order-1' : ''}>
                   <div className={`pwi-image-panel h-full min-h-[340px] border-l-4 ${PROGRAM_VISUALS[program.key].accent}`}>
                     <img
-                      src={PROGRAM_VISUALS[program.key].image}
+                      src={(PROGRAM_IMAGE_KEYS[program.key] && images[PROGRAM_IMAGE_KEYS[program.key]]) || PROGRAM_VISUALS[program.key].image}
                       alt={PROGRAM_VISUALS[program.key].imageAlt}
                     />
                     <div className="absolute bottom-6 left-6 z-10 max-w-sm text-white">

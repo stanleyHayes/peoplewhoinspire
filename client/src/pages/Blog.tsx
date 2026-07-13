@@ -15,46 +15,47 @@ import api from '../services/api';
 import type { Post } from '../types';
 import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
-import { FALLBACK_POSTS, IMAGES } from '../data/siteContent';
+import { FALLBACK_POSTS } from '../data/siteContent';
+import { useSiteContent, type SiteImages } from '../context/SiteContentContext';
 
 const POSTS_PER_PAGE = 9;
 
-const postImageFallbacks = [
+const postImageFallbacks = (images: SiteImages) => [
   {
     pattern: /community|mentorship|network|together/i,
-    image: IMAGES.communityStudy,
+    image: images.communityStudy,
   },
   {
     pattern: /conversation|youtube|guest|dialogue|story/i,
-    image: IMAGES.conversationsTable,
+    image: images.conversationsTable,
   },
   {
     pattern: /fellowship|cohort|formation/i,
-    image: IMAGES.fellowshipCohort,
+    image: images.fellowshipCohort,
   },
   {
     pattern: /program|masterclass|workshop|learning/i,
-    image: IMAGES.programsWorkshop,
+    image: images.programsWorkshop,
   },
   {
     pattern: /event|gathering|stage|live/i,
-    image: IMAGES.eventsStage,
+    image: images.eventsStage,
   },
   {
     pattern: /news|welcome|platform|launch|impact|leadership|purpose/i,
-    image: IMAGES.heroConversation,
+    image: images.heroConversation,
   },
 ];
 
-const defaultPostImages = [
-  IMAGES.heroConversation,
-  IMAGES.communityStudy,
-  IMAGES.conversationsTable,
+const defaultPostImages = (images: SiteImages) => [
+  images.heroConversation,
+  images.communityStudy,
+  images.conversationsTable,
 ];
 
-function getBlogPostImage(post: Post, index = 0) {
+function getBlogPostImage(images: SiteImages, post: Post, index = 0) {
   const uploadedImage = post.coverImage || post.image;
-  if (uploadedImage && uploadedImage !== IMAGES.blogEditorial) return uploadedImage;
+  if (uploadedImage && uploadedImage !== images.blogEditorial) return uploadedImage;
 
   const searchable = [
     post.category,
@@ -63,13 +64,15 @@ function getBlogPostImage(post: Post, index = 0) {
     ...(post.tags || []),
   ].join(' ');
 
+  const fallbacks = defaultPostImages(images);
   return (
-    postImageFallbacks.find((fallback) => fallback.pattern.test(searchable))?.image ||
-    defaultPostImages[index % defaultPostImages.length]
+    postImageFallbacks(images).find((fallback) => fallback.pattern.test(searchable))?.image ||
+    fallbacks[index % fallbacks.length]
   );
 }
 
 export default function BlogPage() {
+  const { images } = useSiteContent();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -122,7 +125,7 @@ export default function BlogPage() {
         eyebrow="Our Blog"
         title={<>Insights &amp; <span className="text-gold-400">Stories</span></>}
         description="Explore thought leadership articles, stories of impact, and insights from the PWI community."
-        image={IMAGES.blogEditorial}
+        image={images.blogEditorial}
         imageAlt="Editorial workspace for writing leadership stories"
         icon={FaNewspaper}
         stats={[
@@ -187,7 +190,7 @@ export default function BlogPage() {
                   >
                     <div className="pwi-image-panel min-h-[360px] lg:min-h-[440px]">
                       <img
-                        src={getBlogPostImage(featuredPost)}
+                        src={getBlogPostImage(images, featuredPost)}
                         alt={featuredPost.title}
                       />
                       <div className="absolute left-6 top-6 z-10 flex items-center gap-2 bg-gold-400 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.16em] text-navy-950">
@@ -262,7 +265,7 @@ export default function BlogPage() {
                       <div className="pwi-card pwi-card-hover h-full">
                         <div className="relative flex h-48 items-center justify-center overflow-hidden bg-gradient-to-br from-navy-800 to-navy-600">
                           <img
-                            src={getBlogPostImage(post, index + 1)}
+                            src={getBlogPostImage(images, post, index + 1)}
                             alt={post.title}
                             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                           />

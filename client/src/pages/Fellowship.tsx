@@ -14,7 +14,7 @@ import SectionHeader from '../components/ui/SectionHeader';
 import { FORMS } from '../config/site';
 import PageHero from '../components/ui/PageHero';
 import Watermark from '../components/ui/Watermark';
-import { IMAGES } from '../data/siteContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 // Feedback §4.5: real cohort dates create urgency. TODO: confirm exact dates with PWI.
 const cohort = {
@@ -55,13 +55,15 @@ const eligibility = [
 ];
 
 export default function FellowshipPage() {
+  const { images } = useSiteContent();
+
   return (
     <>
       <PageHero
         eyebrow="Fellowship Hub"
         title={<>The PWI <span className="text-gold-400">Fellowship</span></>}
         description="An exclusive program for high-potential leaders ready to accelerate their impact through mentorship, resources, and a global community."
-        image={IMAGES.fellowshipCohort}
+        image={images.fellowshipCohort}
         imageAlt="A leadership cohort in a workshop setting"
         icon={FaRocket}
         actions={[

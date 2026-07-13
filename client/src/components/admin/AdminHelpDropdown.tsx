@@ -78,6 +78,14 @@ const pageHelp: Record<string, PageHelp> = {
       'Feature important events when they should be promoted more visibly.',
     ],
   },
+  '/admin/site-content': {
+    purpose: 'Site Content lets you swap public hero and banner images and update social links without a redeploy.',
+    steps: [
+      'Upload a custom image for any page hero, or reset it to the bundled default.',
+      'Update the official social profile URLs used in the footer, contact page, navbar, and SEO metadata.',
+      'Click Save & publish — changes go live for visitors immediately.',
+    ],
+  },
   '/admin/partners': {
     purpose: 'Partners manages organizations and collaborators connected to PWI.',
     steps: [

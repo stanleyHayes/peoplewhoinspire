@@ -13,22 +13,23 @@ import {
 } from 'react-icons/fa';
 import toast from 'react-hot-toast';
 import api from '../services/api';
-import { CONTACT, SOCIAL } from '../config/site';
+import { CONTACT } from '../config/site';
 import PageHero from '../components/ui/PageHero';
 import { Skeleton } from '../components/ui/Skeleton';
 import Watermark from '../components/ui/Watermark';
-import { IMAGES } from '../data/siteContent';
-
-const followLinks = [
-  { icon: FaFacebookF, href: SOCIAL.facebook, label: 'Facebook' },
-  { icon: FaTwitter, href: SOCIAL.twitter, label: 'Twitter' },
-  { icon: FaInstagram, href: SOCIAL.instagram, label: 'Instagram' },
-  { icon: FaLinkedinIn, href: SOCIAL.linkedin, label: 'LinkedIn' },
-  { icon: FaYoutube, href: SOCIAL.youtube, label: 'YouTube' },
-  { icon: FaWhatsapp, href: CONTACT.whatsappUrl, label: 'WhatsApp' },
-];
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function ContactPage() {
+  const { images, social } = useSiteContent();
+  const followLinks = [
+    { icon: FaFacebookF, href: social.facebook, label: 'Facebook' },
+    { icon: FaTwitter, href: social.twitter, label: 'Twitter' },
+    { icon: FaInstagram, href: social.instagram, label: 'Instagram' },
+    { icon: FaLinkedinIn, href: social.linkedin, label: 'LinkedIn' },
+    { icon: FaYoutube, href: social.youtube, label: 'YouTube' },
+    { icon: FaWhatsapp, href: CONTACT.whatsappUrl, label: 'WhatsApp' },
+  ];
+
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -63,7 +64,7 @@ export default function ContactPage() {
         eyebrow="Contact Us"
         title={<>Get in <span className="text-gold-400">Touch</span></>}
         description="Have questions about programs, partnerships, speaker nominations, or the Fellowship? We would love to hear from you."
-        image={IMAGES.contactOffice}
+        image={images.contactOffice}
         imageAlt="A professional team workspace"
         icon={FaEnvelope}
         stats={[
@@ -146,12 +147,12 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-semibold text-white mb-1">Social</h3>
                     <a
-                      href={SOCIAL.instagram}
+                      href={social.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-gray-300 hover:text-gold-300 transition-colors"
                     >
-                      {SOCIAL.instagramHandle}
+                      {social.instagramHandle}
                     </a>
                   </div>
                 </div>

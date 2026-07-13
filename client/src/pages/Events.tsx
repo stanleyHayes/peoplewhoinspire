@@ -16,7 +16,8 @@ import { LIVE_SESSION } from '../config/site';
 import PageHero from '../components/ui/PageHero';
 import { PublicCardGridSkeleton } from '../components/ui/Skeleton';
 import Watermark from '../components/ui/Watermark';
-import { getFallbackEvents, IMAGES } from '../data/siteContent';
+import { getFallbackEvents } from '../data/siteContent';
+import { useSiteContent } from '../context/SiteContentContext';
 
 interface Event {
   _id: string;
@@ -41,6 +42,7 @@ const typeConfig: Record<string, { icon: typeof FaVideo; label: string; color: s
 const EVENTS_PER_PAGE = 6;
 
 export default function EventsPage() {
+  const { images, social } = useSiteContent();
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'upcoming' | 'past'>('upcoming');
@@ -81,13 +83,13 @@ export default function EventsPage() {
         eyebrow="Events & Gatherings"
         title={<>Where Leaders <span className="text-gold-400">Connect</span></>}
         description="Join upcoming events, workshops, masterclasses, and weekly conversations designed to inspire and equip purpose-driven leaders."
-        image={IMAGES.eventsStage}
+        image={images.eventsStage}
         imageAlt="A live event with a speaker presenting to an audience"
         icon={FaCalendarAlt}
         actions={[
           {
             label: `Watch Live - ${LIVE_SESSION.schedule}`,
-            href: LIVE_SESSION.watchUrl,
+            href: social.youtube,
             icon: <FaYoutube className="text-lg" />,
           },
         ]}
@@ -176,7 +178,7 @@ export default function EventsPage() {
                   : 'Past session recordings are being uploaded. Catch every episode on our YouTube channel.'}
               </p>
               <a
-                href={LIVE_SESSION.watchUrl}
+                href={social.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="pwi-btn pwi-btn-dark text-sm"
